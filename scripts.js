@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Navigation Links
+
     const homeLink = document.getElementById('homeLink');
     const reportLink = document.getElementById('reportLink');
     const searchLink = document.getElementById('searchLink');
     const aboutLink = document.getElementById('aboutLink');
     const contactLink = document.getElementById('contactLink');
 
-    // Sections
+
     const homeSection = document.getElementById('homeSection');
     const reportSection = document.getElementById('reportSection');
     const searchSection = document.getElementById('searchSection');
     const aboutSection = document.getElementById('aboutSection');
     const contactSection = document.getElementById('contactSection');
 
-    // Forms and Inputs
+
     const reportForm = document.getElementById('reportForm');
     const searchButton = document.getElementById('searchButton');
     const advancedSearchBtn = document.getElementById('advancedSearchBtn');
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const categorySearch = document.getElementById('categorySearch');
     const getLocationBtn = document.getElementById('getLocationBtn');
 
-    // Event Listeners for Navigation
+
     homeLink.addEventListener('click', function (e) {
         e.preventDefault();
         showSection(homeSection);
@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showSection(contactSection);
     });
 
-    // Function to Show Section
     function showSection(section) {
         const allSections = document.querySelectorAll('main section');
         allSections.forEach(sec => sec.classList.remove('active'));
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         window.scrollTo(0, 0);
     }
 
-    // Handle Report Form Submission
+
     reportForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -83,13 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
         showSection(homeSection);
     });
 
-    // Handle Basic Search Button
+
     searchButton.addEventListener('click', function () {
         const query = searchInput.value.trim().toLowerCase();
         searchItems({ keyword: query });
     });
 
-    // Handle Advanced Search Button
+
     advancedSearchBtn.addEventListener('click', function () {
         const keyword = keywordSearch.value.trim().toLowerCase();
         const date = dateSearch.value;
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
         searchItems({ keyword, date, category });
     });
 
-    // Function to Search Items
+
     function searchItems({ keyword, date, category }) {
         const items = JSON.parse(localStorage.getItem('items')) || [];
         const results = items.filter(item => {
@@ -123,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showSection(searchSection);
     }
 
-    // Function to Display Search Results
+
     function displaySearchResults(results) {
         searchResults.innerHTML = '';
         if (results.length === 0) {
@@ -146,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Get User's Current Location
+
     getLocationBtn.addEventListener('click', function () {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
