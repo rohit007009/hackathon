@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>LOCATEX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="styles.css">
- 
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
+    <link rel="icon" href="assets/icon/favicon.ico">
 </head>
+
 <body>
- 
+
     <header>
         <div class="container">
             <h1>LOCATEX</h1>
-            <nav>
-                <ul>
+            <nav class="main-nav">
+                <button id="menuBtn"><img src="assets/icon/hamburger-svgrepo-com.svg" alt="" class="img"></button>
+                <ul class="items">
                     <li><a href="#" id="homeLink">Home</a></li>
                     <li><a href="#" id="reportLink">Report Item</a></li>
                     <li><a href="#" id="searchLink">Search Items</a></li>
@@ -27,15 +30,14 @@
         </div>
     </header>
 
- 
+
     <main>
 
         <section id="homeSection" class="active">
             <div class="hero">
                 <h2>Reunite with Your Lost Treasures</h2>
                 <div class="search-bar">
-                    <input type="text" id="searchInput"
-                           placeholder="What have you lost or found?">
+                    <input type="text" id="searchInput" placeholder="What have you lost or found?">
                     <button id="searchButton">Search</button>
                 </div>
             </div>
@@ -58,46 +60,40 @@
             </div>
         </section>
 
-   
+
         <section id="reportSection">
             <h2>Report Lost or Found Item</h2>
             <form id="reportForm">
                 <label for="itemType">Item Type:</label>
-                <select id="itemType">
+                <select id="itemType" name="itemType">
                     <option value="lost">Lost</option>
                     <option value="found">Found</option>
                 </select>
 
                 <label for="itemName">Item Name:</label>
-                <input type="text" id="itemName"
-                       placeholder="e.g., Wallet, Phone" required>
+                <input type="text" id="itemName" name="itemName" placeholder="e.g., Wallet, Phone" required>
 
                 <label for="itemDescription">Description:</label>
-                <textarea id="itemDescription" rows="4" required
-                          placeholder="Provide a detailed description"></textarea>
+                <textarea id="itemDescription" name="itemDescription" rows="4" required
+                    placeholder="Provide a detailed description"></textarea>
 
                 <label for="itemLocation">Location:</label>
-                <input type="text" id="itemLocation"
-                       placeholder="Enter location or use current location"
-                       required>
-                <button type="button" id="getLocationBtn">
-                    Use My Current Location
-                </button>
+                <input type="text" id="itemLocation" name="itemLocation"
+                    placeholder="Enter location or use current location" required>
+                <button type="button" id="getLocationBtn">Use My Current Location</button>
 
                 <label for="userEmail">Your Email:</label>
-                <input type="email" id="userEmail"
-                       placeholder="you@example.com" required>
+                <input type="email" id="userEmail" name="userEmail" placeholder="you@example.com" required>
 
                 <button type="submit">Submit Report</button>
             </form>
         </section>
 
- 
+
         <section id="searchSection">
             <h2>Search Lost & Found Items</h2>
             <div class="search-filters">
-                <input type="text" id="keywordSearch"
-                       placeholder="Keyword">
+                <input type="text" id="keywordSearch" placeholder="Keyword">
                 <input type="date" id="dateSearch">
                 <select id="categorySearch">
                     <option value="">All Categories</option>
@@ -108,11 +104,11 @@
                 <button id="advancedSearchBtn">Search</button>
             </div>
             <div id="searchResults" class="item-list">
-               
+
             </div>
         </section>
 
-   
+
         <section id="aboutSection">
             <h2>About Us</h2>
             <p>
@@ -122,7 +118,7 @@
             </p>
         </section>
 
-       
+
         <section id="contactSection">
             <h2>Contact Us</h2>
             <form id="contactForm">
@@ -141,11 +137,38 @@
     </main>
 
 
-    <footer>
+    <footer class="footer">
         <p>&copy; 2025 LOCATEX. All rights reserved.</p>
     </footer>
 
-  
+
     <script src="scripts.js"></script>
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch('/report', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
 </body>
+
 </html>

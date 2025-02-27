@@ -1,9 +1,9 @@
-/* General Styles */
-body {
+General Styles body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     color: #333;
     background-color: #f9f9f9;
+    min-height: 100vh;
 }
 
 a {
@@ -15,9 +15,12 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     margin: 0;
 }
 
@@ -25,7 +28,7 @@ h1, h2, h3 {
 header {
     background-color: #4CAF50;
     color: #fff;
-    padding: 1rem 2rem;
+    padding: 0px;
 }
 
 header h1 {
@@ -37,15 +40,26 @@ nav ul {
     display: flex;
     margin: 0;
     padding: 0;
+    justify-content: space-evenly;
 }
 
 nav ul li {
     margin-left: 1.5rem;
+    padding: 20px;
+}
+
+nav ul li:hover {
+    background-color: #45a049;
+    color: #fff;
 }
 
 nav ul li a {
     font-size: 1rem;
     font-weight: 600;
+}
+
+#menuBtn {
+    display: none;
 }
 
 /* Main Content Styles */
@@ -64,11 +78,9 @@ section.active {
 /* Hero Section */
 .hero {
     text-align: center;
-    background-image: linear-gradient(
-        rgba(0, 0, 0, 0.4),
-        rgba(0, 0, 0, 0.4)
-      ),
-      url('https://via.placeholder.com/1200x400');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.4)),
+        url('assets/background/download.jpg');
     color: #fff;
     padding: 4rem 2rem;
     background-size: cover;
@@ -93,6 +105,7 @@ section.active {
     border: none;
     border-radius: 4px 0 0 4px;
     font-size: 1rem;
+    margin: 0px
 }
 
 .search-bar button {
@@ -218,4 +231,56 @@ footer {
     text-align: center;
     padding: 1rem;
     margin-top: 4rem;
+}
+
+@media screen and (max-width: 1000px) {
+    #menuBtn {
+        display: block;
+        border: none;
+        background-color: #45a049;
+    }
+
+    .items {
+        display: none;
+        position: absolute;
+        top: 50px;
+        /* Adjust based on your header height */
+        right: 10px;
+        background-color: #4CAF50;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform: translateY(-20px);
+        opacity: 0;
+        z-index: 1000;
+    }
+
+    .items.show {
+        display: block;
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    #menuBtn>.img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .steps {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .step-number {
+        margin: 1rem;
+    }
 }
