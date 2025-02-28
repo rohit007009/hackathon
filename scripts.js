@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const itemDescription = document.getElementById('itemDescription').value;
         const itemLocation = document.getElementById('itemLocation').value;
         const userEmail = document.getElementById('userEmail').value;
+        const itemPhoto = document.getElementById('itemPhoto').files[0];
 
         const newItem = {
             type: itemType,
@@ -85,7 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
             description: itemDescription,
             location: itemLocation,
             email: userEmail,
-            date: new Date().toISOString().split('T')[0]
+            date: new Date().toISOString().split('T')[0],
+            photo: itemPhoto ? URL.createObjectURL(itemPhoto) : null
         };
 
         let items = JSON.parse(localStorage.getItem('items')) || [];
@@ -152,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p><strong>Description:</strong> ${item.description}</p>
                 <p><strong>Location:</strong> ${item.location}</p>
                 <p><strong>Date:</strong> ${item.date}</p>
+                ${item.photo ? `<img src="${item.photo}" alt="${item.name}" style="max-width: 100%;">` : ''}
             `;
             searchResults.appendChild(itemCard);
         });
