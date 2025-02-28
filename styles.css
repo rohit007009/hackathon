@@ -31,7 +31,6 @@ h3 {
     margin: 0;
 }
 
-/* Header Styles */
 header {
     background-color: #4CAF50;
     color: #fff;
@@ -65,11 +64,12 @@ nav ul li a {
     font-weight: 600;
 }
 
+
 #menuBtn {
     display: none;
 }
 
-/* Main Content Styles */
+
 main {
     padding: 2rem;
 }
@@ -82,7 +82,6 @@ section.active {
     display: block;
 }
 
-/* Hero Section */
 .hero {
     text-align: center;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4),
@@ -129,7 +128,6 @@ section.active {
     background-color: #e68900;
 }
 
-/* How It Works Section */
 .how-it-works {
     margin-top: 4rem;
     text-align: center;
@@ -157,7 +155,6 @@ section.active {
     margin-bottom: 1rem;
 }
 
-/* Form Styles */
 form {
     max-width: 600px;
     margin: 0 auto;
@@ -171,6 +168,8 @@ label {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
+input[type="file"],
 textarea,
 select {
     width: 100%;
@@ -198,9 +197,15 @@ button:hover {
     background-color: #45a049;
 }
 
+#loginMessage, #signUpMessage {
+    margin-top: 15px;
+    color: red;
+}
+
 /* Search Section */
 .search-filters {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 1rem;
@@ -212,9 +217,45 @@ button:hover {
 }
 
 .item-list {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
+h6{
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+h5{
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+h4{
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+p{
+    font-weight: lighter;
+    font-size: medium;
+}
 .item-card {
     background-color: #fff;
     padding: 1.5rem;
@@ -231,7 +272,6 @@ button:hover {
     margin: 0.5rem 0;
 }
 
-/* Footer Styles */
 footer {
     background-color: #333;
     color: #fff;

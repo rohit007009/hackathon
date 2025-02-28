@@ -5,11 +5,15 @@
     <meta charset="UTF-8">
     <title>LOCATEX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="styles.css">
 
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
-    <link rel="icon" href="assets/icon/favicon.ico">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+
 </head>
 
 <body class="mai">
@@ -25,6 +29,8 @@
                     <li><a href="#" id="searchLink">Search Items</a></li>
                     <li><a href="#" id="aboutLink">About Us</a></li>
                     <li><a href="#" id="contactLink">Contact Us</a></li>
+                    <li><a href="#" id="loginLink">Login</a></li>
+                    <li><a href="#" id="signUpLink">Sign Up</a></li>
                 </ul>
             </nav>
         </div>
@@ -32,7 +38,6 @@
 
 
     <main>
-
         <section id="homeSection" class="active">
             <div class="hero">
                 <h2>Reunite with Your Lost Treasures</h2>
@@ -60,7 +65,6 @@
             </div>
         </section>
 
-
         <section id="reportSection">
             <h2>Report Lost or Found Item</h2>
             <form id="reportForm" enctype="multipart/form-data">
@@ -71,19 +75,23 @@
                 </select>
 
                 <label for="itemName">Item Name:</label>
-                <input type="text" id="itemName" name="itemName" placeholder="e.g., Wallet, Phone" required>
+
+
+                <input type="text" id="itemName" placeholder="e.g., Wallet, Phone" required>
 
                 <label for="itemDescription">Description:</label>
-                <textarea id="itemDescription" name="itemDescription" rows="4" required
-                    placeholder="Provide a detailed description"></textarea>
+                <textarea id="itemDescription" rows="4" required placeholder="Provide a detailed description"></textarea>
 
                 <label for="itemLocation">Location:</label>
-                <input type="text" id="itemLocation" name="itemLocation"
-                    placeholder="Enter location or use current location" required>
+                <input type="text" id="itemLocation" placeholder="Enter location or use current location" required>
                 <button type="button" id="getLocationBtn">Use My Current Location</button>
 
                 <label for="userEmail">Your Email:</label>
-                <input type="email" id="userEmail" name="userEmail" placeholder="you@example.com" required>
+                <input type="email" id="userEmail" placeholder="you@example.com" required>
+
+                <label for="itemPhoto">Item Photo:</label>
+                <input type="file" id="itemPhoto" accept="image/*">
+
 
                 <label for="itemImage">Upload Image:</label>
                 <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
@@ -92,35 +100,60 @@
             </form>
         </section>
 
-
         <section id="searchSection">
             <h2>Search Lost & Found Items</h2>
             <div class="search-filters">
-                <input type="text" id="keywordSearch" placeholder="Keyword">
-                <input type="date" id="dateSearch">
-                <select id="categorySearch">
+
+                <label for="keywordSearch">Item:</label>
+                <input style="width: 69rem;" type="text" id="keywordSearch" placeholder="Keyword">
+
+                <label for="date">Date:</label>
+                <input style="width: 10rem;" type="date" id="dateSearch">
+
+                <label for="categorySearch">Categories:</label>
+                <select style="width: 20rem;" id="categorySearch">
+
                     <option value="">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="documents">Documents</option>
                     <option value="personal items">Personal Items</option>
                 </select>
-                <button id="advancedSearchBtn">Search</button>
-            </div>
-            <div id="searchResults" class="item-list">
+
+
+
+                <button style="width: 20rem; text-align: center;" id="advancedSearchBtn">Search</button>
 
             </div>
+            <div id="searchResults" class="item-list"></div>
         </section>
-
 
         <section id="aboutSection">
             <h2>About Us</h2>
             <p>
-                We are dedicated to helping people reunite with their lost
-                belongings. Our community-driven platform increases the chances
-                of recovery through collective effort.
-            </p>
-        </section>
+                Lost & Found is a community-driven platform designed to help individuals report and reclaim lost items. Our mission is to create a seamless process for reuniting people with their belongings by facilitating the reporting of both lost and found items.
 
+
+
+
+
+                .</p>
+                <h6> Our Mission </h6>
+                <p>
+                    At Lost & Found, our mission is to reduce the stress and inconvenience of losing personal belongings. By leveraging the power of community and technology, we aim to increase the chances of lost items being returned to their rightful owners.
+
+                </p>
+                <h5>Our Vision</h7>
+
+                <p>
+                    We envision a world where lost items are quickly and efficiently returned to their owners. Through our platform, we hope to foster a sense of community and trust, where people feel confident that their lost belongings can find their way back home.
+
+                </p>
+                <h4>Meet the Team</h8>
+                    <div style="margin: 0px; padding: 0px;">
+                    <img width="200rem" style="color: transparent;" src="profile.jpg" alt="">
+                    <h3 style="background-color: white; color: black; text-align: center; width: 10rem;">Rohit</h3>
+                    </div>
+                    </section>
 
         <section id="contactSection">
             <h2>Contact Us</h2>
@@ -137,13 +170,34 @@
                 <button type="submit">Send Message</button>
             </form>
         </section>
-    </main>
 
+        <section id="loginSection">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p style="text-align: center;">Don't have an account? <a style=" color: skyblue;" href="#" id="signUpLinkFromLogin">Sign Up</a></p>
+        </section>
+
+        <section id="signUpSection">
+            <h2>Sign Up</h2>
+            <form id="signUpForm">
+                <label for="signUpUsername">Username:</label>
+                <input type="text" id="signUpUsername" required>
+                <label for="signUpPassword">Password:</label>
+                <input type="password" id="signUpPassword" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </section>
+    </main>
 
     <footer class="footer">
         <p>&copy; 2025 LOCATEX. All rights reserved.</p>
     </footer>
-
 
     <script src="scripts.js"></script>
     <script>
