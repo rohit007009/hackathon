@@ -79,6 +79,9 @@
                 <label for="userEmail">Your Email:</label>
                 <input type="email" id="userEmail" placeholder="you@example.com" required>
 
+                <label for="itemPhoto">Item Photo:</label>
+                <input type="file" id="itemPhoto" accept="image/*">
+
                 <button type="submit">Submit Report</button>
             </form>
         </section>
@@ -86,23 +89,52 @@
         <section id="searchSection">
             <h2>Search Lost & Found Items</h2>
             <div class="search-filters">
-                <input type="text" id="keywordSearch" placeholder="Keyword">
-                <input type="date" id="dateSearch">
-                <select id="categorySearch">
+
+                <label for="keywordSearch">Item:</label>
+                <input style="width: 69rem;" type="text" id="keywordSearch" placeholder="Keyword">
+
+                <label for="date">Date:</label>
+                <input style="width: 10rem;" type="date" id="dateSearch">
+
+                <label for="categorySearch">Categories:</label>
+                <select style="width: 20rem;" id="categorySearch">
                     <option value="">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="documents">Documents</option>
                     <option value="personal items">Personal Items</option>
                 </select>
-                <button id="advancedSearchBtn">Search</button>
+                <button style="width: 20rem; text-align: center;" id="advancedSearchBtn">Search</button>
             </div>
             <div id="searchResults" class="item-list"></div>
         </section>
 
         <section id="aboutSection">
             <h2>About Us</h2>
-            <p>We are dedicated to helping people reunite with their lost belongings. Our community-driven platform increases the chances of recovery through collective effort.</p>
-        </section>
+            <p>
+                Lost & Found is a community-driven platform designed to help individuals report and reclaim lost items. Our mission is to create a seamless process for reuniting people with their belongings by facilitating the reporting of both lost and found items.
+
+
+
+
+
+                .</p>
+                <h6> Our Mission </h6>
+                <p>
+                    At Lost & Found, our mission is to reduce the stress and inconvenience of losing personal belongings. By leveraging the power of community and technology, we aim to increase the chances of lost items being returned to their rightful owners.
+
+                </p>
+                <h5>Our Vision</h7>
+
+                <p>
+                    We envision a world where lost items are quickly and efficiently returned to their owners. Through our platform, we hope to foster a sense of community and trust, where people feel confident that their lost belongings can find their way back home.
+
+                </p>
+                <h4>Meet the Team</h8>
+                    <div style="margin: 0px; padding: 0px;">
+                    <img width="200rem" style="color: transparent;" src="profile.jpg" alt="">
+                    <h3 style="background-color: white; color: black; text-align: center; width: 10rem;">Rohit</h3>
+                    </div>
+                    </section>
 
         <section id="contactSection">
             <h2>Contact Us</h2>
@@ -129,8 +161,7 @@
                 <input type="password" id="password" required>
                 <button type="submit">Login</button>
             </form>
-            <p style="text-align: center;">Don't have an account? <a style="color: skyblue;" href="#" id="signUpLinkFromLogin">Sign Up</a></p>
-            
+            <p style="text-align: center;">Don't have an account? <a style=" color: skyblue;" href="#" id="signUpLinkFromLogin">Sign Up</a></p>
         </section>
 
         <section id="signUpSection">
