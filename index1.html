@@ -12,7 +12,7 @@
     <link rel="icon" href="assets/icon/favicon.ico">
 </head>
 
-<body>
+<body class="mai">
 
     <header>
         <div class="container">
@@ -63,7 +63,7 @@
 
         <section id="reportSection">
             <h2>Report Lost or Found Item</h2>
-            <form id="reportForm">
+            <form id="reportForm" enctype="multipart/form-data">
                 <label for="itemType">Item Type:</label>
                 <select id="itemType" name="itemType">
                     <option value="lost">Lost</option>
@@ -84,6 +84,9 @@
 
                 <label for="userEmail">Your Email:</label>
                 <input type="email" id="userEmail" name="userEmail" placeholder="you@example.com" required>
+
+                <label for="itemImage">Upload Image:</label>
+                <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
 
                 <button type="submit">Submit Report</button>
             </form>
@@ -148,17 +151,10 @@
             event.preventDefault();
 
             const formData = new FormData(this);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
 
             fetch('/report', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+                body: formData
             })
                 .then(response => response.text())
                 .then(data => {
