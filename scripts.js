@@ -1,3 +1,9 @@
+// Hamburger code//
+document.getElementById('menuBtn').addEventListener('click', function () {
+    const itemsList = document.querySelector('.items');
+    itemsList.classList.toggle('show');
+});
+// End of Hamburger code//
 document.addEventListener('DOMContentLoaded', function () {
     const homeLink = document.getElementById('homeLink');
     const reportLink = document.getElementById('reportLink');
@@ -120,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (keyword) {
                 match = item.name.toLowerCase().includes(keyword) ||
-                        item.description.toLowerCase().includes(keyword);
+                    item.description.toLowerCase().includes(keyword);
             }
 
             if (match && date) {
@@ -150,8 +156,11 @@ document.addEventListener('DOMContentLoaded', function () {
             itemCard.classList.add('item-card');
 
             itemCard.innerHTML = `
+
+
                 <h3>${item.type.charAt(0).toUpperCase() + item.type.slice(1)} Item - ${item.name}</h3>
-                <p><strong>Description:</strong> ${item.description}</p>
+
+              <p><strong>Description:</strong> ${item.description}</p>
                 <p><strong>Location:</strong> ${item.location}</p>
                 <p><strong>Date:</strong> ${item.date}</p>
                 ${item.photo ? `<img src="${item.photo}" alt="${item.name}" style="max-width: 100%;">` : ''}
@@ -164,7 +173,10 @@ document.addEventListener('DOMContentLoaded', function () {
     getLocationBtn.addEventListener('click', function () {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function (position) {
+
+
                 const coords = position.coords.latitude + ', ' + position.coords.longitude;
+
                 document.getElementById('itemLocation').value = coords;
             }, function (error) {
                 alert('Error retrieving location: ' + error.message);

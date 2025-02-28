@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>LOCATEX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+
 </head>
+
 <body>
+
     <header>
         <div class="container">
             <h1>LOCATEX</h1>
-            <nav>
-                <ul>
+            <nav class="main-nav">
+                <button id="menuBtn"><img src="assets/icon/hamburger-svgrepo-com.svg" alt="" class="img"></button>
+                <ul class="items">
                     <li><a href="#" id="homeLink">Home</a></li>
                     <li><a href="#" id="reportLink">Report Item</a></li>
                     <li><a href="#" id="searchLink">Search Items</a></li>
@@ -28,6 +35,7 @@
             </nav>
         </div>
     </header>
+
 
     <main>
         <section id="homeSection" class="active">
@@ -61,12 +69,14 @@
             <h2>Report Lost or Found Item</h2>
             <form id="reportForm">
                 <label for="itemType">Item Type:</label>
-                <select id="itemType">
+                <select id="itemType" name="itemType">
                     <option value="lost">Lost</option>
                     <option value="found">Found</option>
                 </select>
 
                 <label for="itemName">Item Name:</label>
+
+
                 <input type="text" id="itemName" placeholder="e.g., Wallet, Phone" required>
 
                 <label for="itemDescription">Description:</label>
@@ -81,6 +91,7 @@
 
                 <label for="itemPhoto">Item Photo:</label>
                 <input type="file" id="itemPhoto" accept="image/*">
+
 
                 <button type="submit">Submit Report</button>
             </form>
@@ -98,12 +109,17 @@
 
                 <label for="categorySearch">Categories:</label>
                 <select style="width: 20rem;" id="categorySearch">
+
                     <option value="">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="documents">Documents</option>
                     <option value="personal items">Personal Items</option>
                 </select>
+
+
+
                 <button style="width: 20rem; text-align: center;" id="advancedSearchBtn">Search</button>
+
             </div>
             <div id="searchResults" class="item-list"></div>
         </section>
@@ -176,10 +192,37 @@
         </section>
     </main>
 
-    <footer>
+    <footer class="footer">
         <p>&copy; 2025 LOCATEX. All rights reserved.</p>
     </footer>
 
     <script src="scripts.js"></script>
+    <script>
+        document.getElementById('reportForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch('/report', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
 </body>
+
 </html>
