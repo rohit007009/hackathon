@@ -6,6 +6,13 @@ General Styles body {
     min-height: 100vh;
 }
 
+.mai {
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 a {
     text-decoration: none;
     color: inherit;

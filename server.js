@@ -1,12 +1,18 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -20,10 +26,12 @@ db.connect((err) => {
     console.log('Connected to database');
 });
 
-app.post('/report', (req, res) => {
+app.post('/report', upload.single('itemImage'), (req, res) => {
     const { itemType, itemName, itemDescription, itemLocation, userEmail } = req.body;
-    const sql = 'INSERT INTO reports (itemType, itemName, itemDescription, itemLocation, userEmail) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [itemType, itemName, itemDescription, itemLocation, userEmail], (err, result) => {
+    const itemImage = req.file.buffer;
+
+    const sql = 'INSERT INTO reports (itemType, itemName, itemDescription, itemLocation, userEmail, itemImage) VALUES (?, ?, ?, ?, ?, ?)';
+    db.query(sql, [itemType, itemName, itemDescription, itemLocation, userEmail, itemImage], (err, result) => {
         if (err) throw err;
         res.send('Report submitted successfully');
     });
