@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>LOCATEX</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-storage.js"></script>
+    <script src="scripts.js" defer></script>
 </head>
 
 <body class="mai">
-
     <header>
         <div class="container">
             <h1>LOCATEX</h1>
             <nav class="main-nav">
-                <button id="menuBtn"><img src="assets/icon/hamburger-svgrepo-com.svg" alt="" class="img"></button>
+                <button id="menuBtn"><img src="assets/icon/hamburger-svgrepo-com.svg" alt="Menu" class="img"></button>
                 <ul class="items">
                     <li><a href="#" id="homeLink">Home</a></li>
                     <li><a href="#" id="reportLink">Report Item</a></li>
@@ -31,11 +28,11 @@
                     <li><a href="#" id="contactLink">Contact Us</a></li>
                     <li><a href="#" id="loginLink">Login</a></li>
                     <li><a href="#" id="signUpLink">Sign Up</a></li>
+                    <li><a href="#" id="handoverLink">Handover</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-
 
     <main>
         <section id="homeSection" class="active">
@@ -75,8 +72,6 @@
                 </select>
 
                 <label for="itemName">Item Name:</label>
-
-
                 <input type="text" id="itemName" placeholder="e.g., Wallet, Phone" required>
 
                 <label for="itemDescription">Description:</label>
@@ -89,10 +84,6 @@
                 <label for="userEmail">Your Email:</label>
                 <input type="email" id="userEmail" placeholder="you@example.com" required>
 
-                <label for="itemPhoto">Item Photo:</label>
-                <input type="file" id="itemPhoto" accept="image/*">
-
-
                 <label for="itemImage">Upload Image:</label>
                 <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
 
@@ -103,54 +94,33 @@
         <section id="searchSection">
             <h2>Search Lost & Found Items</h2>
             <div class="search-filters">
-
                 <label for="keywordSearch">Item:</label>
                 <input style="width: 69rem;" type="text" id="keywordSearch" placeholder="Keyword">
 
-                <label for="date">Date:</label>
+                <label for="dateSearch">Date:</label>
                 <input style="width: 10rem;" type="date" id="dateSearch">
 
                 <label for="categorySearch">Categories:</label>
                 <select style="width: 20rem;" id="categorySearch">
-
                     <option value="">All Categories</option>
                     <option value="electronics">Electronics</option>
                     <option value="documents">Documents</option>
                     <option value="personal items">Personal Items</option>
                 </select>
 
-
-
                 <button style="width: 20rem; text-align: center;" id="advancedSearchBtn">Search</button>
-
             </div>
             <div id="searchResults" class="item-list"></div>
         </section>
 
         <section id="aboutSection">
             <h2>About Us</h2>
-            <p>
-                Lost & Found is a community-driven platform designed to help individuals report and reclaim lost items. Our mission is to create a seamless process for reuniting people with their belongings by facilitating the reporting of both lost and found items.
-
-
-
-
-
-                .</p>
-                <h6> Our Mission </h6>
-                <p>
-                    At Lost & Found, our mission is to reduce the stress and inconvenience of losing personal belongings. By leveraging the power of community and technology, we aim to increase the chances of lost items being returned to their rightful owners.
-
-                </p>
-                <h5>Our Vision</h7>
-
-                <p>
-                    We envision a world where lost items are quickly and efficiently returned to their owners. Through our platform, we hope to foster a sense of community and trust, where people feel confident that their lost belongings can find their way back home.
-
-                </p>
-                
-                    </div>
-                    </section>
+            <p>Lost & Found is a community-driven platform designed to help individuals report and reclaim lost items. Our mission is to create a seamless process for reuniting people with their belongings by facilitating the reporting of both lost and found items.</p>
+            <h6>Our Mission</h6>
+            <p>At Lost & Found, our mission is to reduce the stress and inconvenience of losing personal belongings. By leveraging the power of community and technology, we aim to increase the chances of lost items being returned to their rightful owners.</p>
+            <h5>Our Vision</h5>
+            <p>We envision a world where lost items are quickly and efficiently returned to their owners. Through our platform, we hope to foster a sense of community and trust, where people feel confident that their lost belongings can find their way back home.</p>
+        </section>
 
         <section id="contactSection">
             <h2>Contact Us</h2>
@@ -177,7 +147,7 @@
                 <input type="password" id="password" required>
                 <button type="submit">Login</button>
             </form>
-            <p style="text-align: center;">Don't have an account? <a style=" color: skyblue;" href="#" id="signUpLinkFromLogin">Sign Up</a></p>
+            <p style="text-align: center;">Don't have an account? <a style="color: skyblue;" href="#" id="signUpLinkFromLogin">Sign Up</a></p>
         </section>
 
         <section id="signUpSection">
@@ -190,32 +160,23 @@
                 <button type="submit">Sign Up</button>
             </form>
         </section>
+
+        <section id="handoverSection">
+            <h2>Handover Item</h2>
+            <form id="handoverForm">
+                <label for="handoverCode">Verification Code:</label>
+                <input type="text" id="handoverCode" placeholder="Enter the verification code" required>
+
+                <label for="handoverDetails">Handover Details:</label>
+                <textarea id="handoverDetails" rows="4" required placeholder="Provide handover details"></textarea>
+
+                <button type="submit">Complete Handover</button>
+            </form>
+        </section>
     </main>
 
     <footer class="footer">
         <p>&copy; 2025 LOCATEX. All rights reserved.</p>
     </footer>
-
-    <script src="scripts.js"></script>
-    <script>
-        document.getElementById('reportForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const formData = new FormData(this);
-
-            fetch('/report', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.text())
-                .then(data => {
-                    alert(data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-    </script>
 </body>
-
 </html>
