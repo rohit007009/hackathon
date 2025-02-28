@@ -1,42 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+const express = require('express');
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const multer = require('multer');
 
 <head>
-    <meta charset="UTF-8">
-    <title>LOCATEX</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    const app = express();-8">
+    const port = 3000;</title>
+    app.use(bodyParser.urlencoded({ extended: true }));th, initial-scale=1.0">
+    app.use(bodyParser.json());href="styles.css">
 
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
+    const storage = multer.memoryStorage();
+    const upload = multer({ storage: storage });ts.googleapis.com/css?family=Poppins:400,600&display=swap">
     <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
-
-</head>
+    const db = mysql.createConnection({c.com/firebasejs/8.6.2/firebase-app.js"></script>
+    host: 'localhost',://www.gstatic.com/firebasejs/8.6.2/firebase-auth.js"></script>
+    user: 'root',https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+    password: 'password',
+    database: 'locatex'
+    });
 
 <body class="mai">
+    db.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to database');
+    }); <h1>LOCATEX</h1>
+    <nav class="main-nav">
+        app.post('/report', upload.single('itemImage'), (req, res) => {urger-svgrepo-com.svg" alt=""
+        class="img"></button>
+        const { itemType, itemName, itemDescription, itemLocation, userEmail } = req.body;
+        const itemImage = req.file.buffer;="homeLink">Home</a></li>
+        <li><a href="#" id="reportLink">Report Item</a></li>
+        const sql = 'INSERT INTO reports (itemType, itemName, itemDescription, itemLocation, userEmail, itemImage)
+        VALUES (?, ?, ?, ?, ?, ?)';
+        db.query(sql, [itemType, itemName, itemDescription, itemLocation, userEmail, itemImage], (err, result) => {
+        if (err) throw err;href="#" id="contactLink">Contact Us</a></li>
+        res.send('Report submitted successfully');>Login</a></li>
+        }); <li><a href="#" id="signUpLink">Sign Up</a></li>
+        }); </ul>
+    </nav>
+    app.get('/search', (req, res) => {
+    const { keyword, date, category } = req.query;
 
-    <header>
-        <div class="container">
-            <h1>LOCATEX</h1>
-            <nav class="main-nav">
-                <button id="menuBtn"><img src="assets/icon/hamburger-svgrepo-com.svg" alt="" class="img"></button>
-                <ul class="items">
-                    <li><a href="#" id="homeLink">Home</a></li>
-                    <li><a href="#" id="reportLink">Report Item</a></li>
-                    <li><a href="#" id="searchLink">Search Items</a></li>
-                    <li><a href="#" id="aboutLink">About Us</a></li>
-                    <li><a href="#" id="contactLink">Contact Us</a></li>
-                    <li><a href="#" id="loginLink">Login</a></li>
-                    <li><a href="#" id="signUpLink">Sign Up</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }); console.log(`Server running on port ${port}`);app.listen(port, () => {}); }); res.json(results); if (err) throw
+    err; db.query(sql, params, (err, results) => { } params.push(category); sql += ' AND itemType = ?'; if (category) {
+    } params.push(date); sql += ' AND DATE(created_at) = ?'; if (date) { } params.push(`%${keyword}%`, `%${keyword}%`);
+    sql += ' AND (itemName LIKE ? OR itemDescription LIKE ?)'; if (keyword) { const params = []; let sql = 'SELECT *
+    FROM reports WHERE 1=1';
     <main>
         <section id="homeSection" class="active">
             <div class="hero">
@@ -75,23 +111,19 @@
                 </select>
 
                 <label for="itemName">Item Name:</label>
-
-
-                <input type="text" id="itemName" placeholder="e.g., Wallet, Phone" required>
+                <input type="text" id="itemName" name="itemName" placeholder="e.g., Wallet, Phone" required>
 
                 <label for="itemDescription">Description:</label>
-                <textarea id="itemDescription" rows="4" required placeholder="Provide a detailed description"></textarea>
+                <textarea id="itemDescription" name="itemDescription" rows="4" required
+                    placeholder="Provide a detailed description"></textarea>
 
                 <label for="itemLocation">Location:</label>
-                <input type="text" id="itemLocation" placeholder="Enter location or use current location" required>
+                <input type="text" id="itemLocation" name="itemLocation"
+                    placeholder="Enter location or use current location" required>
                 <button type="button" id="getLocationBtn">Use My Current Location</button>
 
                 <label for="userEmail">Your Email:</label>
-                <input type="email" id="userEmail" placeholder="you@example.com" required>
-
-                <label for="itemPhoto">Item Photo:</label>
-                <input type="file" id="itemPhoto" accept="image/*">
-
+                <input type="email" id="userEmail" name="userEmail" placeholder="you@example.com" required>
 
                 <label for="itemImage">Upload Image:</label>
                 <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
@@ -103,7 +135,6 @@
         <section id="searchSection">
             <h2>Search Lost & Found Items</h2>
             <div class="search-filters">
-
                 <label for="keywordSearch">Item:</label>
                 <input style="width: 69rem;" type="text" id="keywordSearch" placeholder="Keyword">
 
@@ -112,48 +143,94 @@
 
                 <label for="categorySearch">Categories:</label>
                 <select style="width: 20rem;" id="categorySearch">
-
                     <option value="">All Categories</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="documents">Documents</option>
-                    <option value="personal items">Personal Items</option>
+                    <option value="lost">Lost</option>
+                    <option value="found">Found</option>
                 </select>
 
-
-
                 <button style="width: 20rem; text-align: center;" id="advancedSearchBtn">Search</button>
-
             </div>
             <div id="searchResults" class="item-list"></div>
         </section>
 
+        <script>
+            document.getElementById('advancedSearchBtn').addEventListener('click', function () {
+                const keyword = document.getElementById('keywordSearch').value;
+                const date = document.getElementById('dateSearch').value;
+                const category = document.getElementById('categorySearch').value;
+
+                const params = new URLSearchParams({ keyword, date, category });
+
+                fetch(`/search?${params.toString()}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const searchResults = document.getElementById('searchResults');
+                        searchResults.innerHTML = '';
+
+                        if (data.length === 0) {
+                            searchResults.innerHTML = '<p>No results found</p>';
+                        } else {
+                            data.forEach(item => {
+                                const itemElement = document.createElement('div');
+                                itemElement.classList.add('item');
+
+                                const itemImage = document.createElement('img');
+                                itemImage.src = `data:image/jpeg;base64,${btoa(String.fromCharCode(...new Uint8Array(item.itemImage.data)))}`;
+                                itemImage.alt = item.itemName;
+
+                                const itemName = document.createElement('h3');
+                                itemName.textContent = item.itemName;
+
+                                const itemDescription = document.createElement('p');
+                                itemDescription.textContent = item.itemDescription;
+
+                                itemElement.appendChild(itemImage);
+                                itemElement.appendChild(itemName);
+                                itemElement.appendChild(itemDescription);
+
+                                searchResults.appendChild(itemElement);
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        </script>
+
         <section id="aboutSection">
             <h2>About Us</h2>
             <p>
-                Lost & Found is a community-driven platform designed to help individuals report and reclaim lost items. Our mission is to create a seamless process for reuniting people with their belongings by facilitating the reporting of both lost and found items.
+                Lost & Found is a community-driven platform designed to help individuals report and reclaim lost items.
+                Our mission is to create a seamless process for reuniting people with their belongings by facilitating
+                the reporting of both lost and found items.
 
 
 
 
 
                 .</p>
-                <h6> Our Mission </h6>
-                <p>
-                    At Lost & Found, our mission is to reduce the stress and inconvenience of losing personal belongings. By leveraging the power of community and technology, we aim to increase the chances of lost items being returned to their rightful owners.
+            <h6> Our Mission </h6>
+            <p>
+                At Lost & Found, our mission is to reduce the stress and inconvenience of losing personal belongings. By
+                leveraging the power of community and technology, we aim to increase the chances of lost items being
+                returned to their rightful owners.
 
-                </p>
-                <h5>Our Vision</h7>
+            </p>
+            <h5>Our Vision</h7>
 
                 <p>
-                    We envision a world where lost items are quickly and efficiently returned to their owners. Through our platform, we hope to foster a sense of community and trust, where people feel confident that their lost belongings can find their way back home.
+                    We envision a world where lost items are quickly and efficiently returned to their owners. Through
+                    our platform, we hope to foster a sense of community and trust, where people feel confident that
+                    their lost belongings can find their way back home.
 
                 </p>
                 <h4>Meet the Team</h8>
                     <div style="margin: 0px; padding: 0px;">
-                    <img width="200rem" style="color: transparent;" src="profile.jpg" alt="">
-                    <h3 style="background-color: white; color: black; text-align: center; width: 10rem;">Rohit</h3>
+                        <img width="200rem" style="color: transparent;" src="profile.jpg" alt="">
+                        <h3 style="background-color: white; color: black; text-align: center; width: 10rem;">Rohit</h3>
                     </div>
-                    </section>
+        </section>
 
         <section id="contactSection">
             <h2>Contact Us</h2>
@@ -180,7 +257,8 @@
                 <input type="password" id="password" required>
                 <button type="submit">Login</button>
             </form>
-            <p style="text-align: center;">Don't have an account? <a style=" color: skyblue;" href="#" id="signUpLinkFromLogin">Sign Up</a></p>
+            <p style="text-align: center;">Don't have an account? <a style=" color: skyblue;" href="#"
+                    id="signUpLinkFromLogin">Sign Up</a></p>
         </section>
 
         <section id="signUpSection">
@@ -213,6 +291,49 @@
                 .then(response => response.text())
                 .then(data => {
                     alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+        document.getElementById('advancedSearchBtn').addEventListener('click', function () {
+            const keyword = document.getElementById('keywordSearch').value;
+            const date = document.getElementById('dateSearch').value;
+            const category = document.getElementById('categorySearch').value;
+
+            const params = new URLSearchParams({ keyword, date, category });
+
+            fetch(`/search?${params.toString()}`)
+                .then(response => response.json())
+                .then(data => {
+                    const searchResults = document.getElementById('searchResults');
+                    searchResults.innerHTML = '';
+
+                    if (data.length === 0) {
+                        searchResults.innerHTML = '<p>No results found</p>';
+                    } else {
+                        data.forEach(item => {
+                            const itemElement = document.createElement('div');
+                            itemElement.classList.add('item');
+
+                            const itemImage = document.createElement('img');
+                            itemImage.src = `data:image/jpeg;base64,${btoa(String.fromCharCode(...new Uint8Array(item.itemImage.data)))}`;
+                            itemImage.alt = item.itemName;
+
+                            const itemName = document.createElement('h3');
+                            itemName.textContent = item.itemName;
+
+                            const itemDescription = document.createElement('p');
+                            itemDescription.textContent = item.itemDescription;
+
+                            itemElement.appendChild(itemImage);
+                            itemElement.appendChild(itemName);
+                            itemElement.appendChild(itemDescription);
+
+                            searchResults.appendChild(itemElement);
+                        });
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);

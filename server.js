@@ -2,8 +2,6 @@ const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -34,6 +32,33 @@ app.post('/report', upload.single('itemImage'), (req, res) => {
     db.query(sql, [itemType, itemName, itemDescription, itemLocation, userEmail, itemImage], (err, result) => {
         if (err) throw err;
         res.send('Report submitted successfully');
+    });
+});
+
+app.get('/search', (req, res) => {
+    const { keyword, date, category } = req.query;
+
+    let sql = 'SELECT * FROM reports WHERE 1=1';
+    const params = [];
+
+    if (keyword) {
+        sql += ' AND (itemName LIKE ? OR itemDescription LIKE ?)';
+        params.push(`%${keyword}%`, `%${keyword}%`);
+    }
+
+    if (date) {
+        sql += ' AND DATE(created_at) = ?';
+        params.push(date);
+    }
+
+    if (category) {
+        sql += ' AND itemType = ?';
+        params.push(category);
+    }
+
+    db.query(sql, params, (err, results) => {
+        if (err) throw err;
+        res.json(results);
     });
 });
 
